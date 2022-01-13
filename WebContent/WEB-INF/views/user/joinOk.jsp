@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="com.javaex.vo.UserVo"%>
-
-<%
-	UserVo authUser = (UserVo)(session.getAttribute("authUser"));
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,34 +13,7 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="">MySite</a>
-			</h1>
-
-			<% 
-			if(authUser == null) { 
-			%>
-				<!-- 로그인실패,로그인전 -->
-				<ul>
-					<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
-					<li><a href="/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
-				</ul>
-			<% 	
-			} else {
-			%>
-				<!-- 로그인성공 -->
-				<ul>
-					<li><%=authUser.getName()%> 님 안녕하세요^^</li>
-					<li><a href="/mysite/user?action=logout" class="btn_s">로그아웃</a></li>
-					<li><a href="/mysite/user?action=modifyForm" class="btn_s">회원정보수정</a></li>
-				</ul>
-			<%
-			} 
-			%>
-			
-		</div>
-		<!-- //header -->
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 		<div id="nav">
 			<ul class="clearfix">
@@ -102,11 +69,7 @@
 		</div>
 		<!-- //container  -->
 
-
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
-		<!-- //footer -->
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
 	<!-- //wrap -->
