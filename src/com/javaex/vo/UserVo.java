@@ -8,7 +8,26 @@ public class UserVo {
 	private String name;
 	private String gender;
 
+	public UserVo(int no, String name) {
+		this.no = no;
+		this.name = name;
+	}
+	
+	public UserVo(String password, String name, String gender) {
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+	}
+	
 	public UserVo(String id, String password, String name, String gender) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+	}
+	
+	public UserVo(int no, String id, String password, String name, String gender) {
+		this.no = no;
 		this.id = id;
 		this.password = password;
 		this.name = name;
@@ -60,5 +79,7 @@ public class UserVo {
 		return "UserVo [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", gender=" + gender
 				+ "]";
 	}
+	
+	
 
 }
