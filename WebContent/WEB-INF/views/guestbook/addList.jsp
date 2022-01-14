@@ -100,7 +100,7 @@
 		</div>
 		<!-- //container  -->
 
-		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		
 	</div>
 	<!-- //wrap -->
