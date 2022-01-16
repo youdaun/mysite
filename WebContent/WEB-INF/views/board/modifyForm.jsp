@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <link href="/mysite/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
 
@@ -42,39 +41,53 @@
 					<div class="clear"></div>
 				</div>
 				<!-- //content-head -->
-	
+
 				<div id="board">
-					<div id="writeForm">
+					<div id="modifyForm">
 						<form action="/mysite/board" method="get">
+							<!-- 작성자 -->
+							<div class="form-group">
+								<span class="form-text">작성자</span> <span class="form-value">${bvo.userName}</span>
+							</div>
+
+							<!-- 조회수 -->
+							<div class="form-group">
+								<span class="form-text">조회수</span> <span class="form-value">${bvo.hit}</span>
+							</div>
+
+							<!-- 작성일 -->
+							<div class="form-group">
+								<span class="form-text">작성일</span> <span class="form-value">${bvo.regDate}</span>
+							</div>
+
 							<!-- 제목 -->
 							<div class="form-group">
-								<label class="form-text" for="txt-title">제목</label>
-								<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
+								<label class="form-text" for="txt-title">제목</label> <input type="text" id="txt-title" name="title" value="${bvo.title}">
 							</div>
-						
+
+
+
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name="content"></textarea>
+								<textarea id="txt-content" name="content">${bvo.content}</textarea>
 							</div>
-							
-							<a id="btn_cancel" href="/mysite/borad?action=list.jsp">취소</a>
-							<button id="btn_add" type="submit" >등록</button>
-							
-							<input type="hidden" name=action value="write">
-							<input type="hidden" name=no value="${authUser.no}">
+
+							<a id="btn_cancel" href="/mysite/board?action=read&no=${bvo.no}">취소</a>
+							<button id="btn_modify" type="submit">수정</button>
+	
+							<input type="hidden" name="no" value="${bvo.no}">
+							<input type="hidden" name="action" value="modify">
 						</form>
 						<!-- //form -->
 					</div>
-					<!-- //writeForm -->
+					<!-- //modifyForm -->
 				</div>
 				<!-- //board -->
 			</div>
 			<!-- //content  -->
 
-
 		</div>
 		<!-- //container  -->
-
 
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 	</div>

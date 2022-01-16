@@ -76,7 +76,10 @@
 								</span>
 							</div>
 							
-							<a id="btn_modify" href="">수정</a>
+							<c:if test="${bvo.userNo == authUser.no}">
+							<a id="btn_modify" href="/mysite/board?action=modifyForm&no=${bvo.no}">수정</a>
+							</c:if>
+							
 							<a id="btn_modify" href="">목록</a>
 							
 						</form>

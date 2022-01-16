@@ -56,16 +56,17 @@ public class BoardDao {
 
 	// 게시글 보기 정보
 	public BoardVo getBoardVo(int index) {
-		
+
 		BoardVo bvo = new BoardVo();
 		getConnection();
-		
+
 		try {
 
 			String query = "";
 			query += " select bo.no ";
 			query += "		  ,title ";
 			query += "		  ,content ";
+			query += "		  ,hit ";
 			query += "   	  ,to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date ";
 			query += " 		  ,user_no ";
 			query += " 		  ,ue.name ";
@@ -83,6 +84,7 @@ public class BoardDao {
 				int no = rs.getInt("no");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
+				int hit = rs.getInt("hit");
 				String regDate = rs.getString("reg_date");
 				int userNo = rs.getInt("user_no");
 				String userName = rs.getString("name");
@@ -90,6 +92,7 @@ public class BoardDao {
 				bvo.setNo(no);
 				bvo.setTitle(title);
 				bvo.setContent(content);
+				bvo.setHit(hit);
 				bvo.setRegDate(regDate);
 				bvo.setUserNo(userNo);
 				bvo.setUserName(userName);
@@ -102,7 +105,7 @@ public class BoardDao {
 		close();
 		return bvo;
 	}
-	
+
 	// 게시판 리스트 출력
 	public List<BoardVo> getList() {
 
@@ -115,6 +118,7 @@ public class BoardDao {
 			query += " select bo.no ";
 			query += "		  ,title ";
 			query += "		  ,content ";
+			query += "		  ,hit ";
 			query += "   	  ,to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date ";
 			query += " 		  ,user_no ";
 			query += " 		  ,ue.name ";
@@ -131,11 +135,12 @@ public class BoardDao {
 				int no = rs.getInt("no");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
+				int hit = rs.getInt("hit");
 				String regDate = rs.getString("reg_date");
 				int userNo = rs.getInt("user_no");
 				String userName = rs.getString("name");
 
-				BoardVo bvo = new BoardVo(no, title, content, regDate, userNo, userName);
+				BoardVo bvo = new BoardVo(no, title, content, hit, regDate, userNo, userName);
 				bList.add(bvo);
 			}
 
@@ -176,7 +181,7 @@ public class BoardDao {
 
 	// 게시글 삭제
 	public void delete(int no) {
-		
+
 		getConnection();
 
 		try {
@@ -191,7 +196,60 @@ public class BoardDao {
 			int count = pstmt.executeUpdate();
 
 			System.out.println("[" + count + "개의 글이 삭제되었습니다.]");
-			
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+	}
+
+	// 조회수 증가
+	public void updateHit(int no) {
+
+		getConnection();
+
+		try {
+
+			String query = "";
+			query += " update board ";
+			query += " set    hit = hit + 1 ";
+			query += " where  no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+
+			pstmt.executeUpdate();
+
+			// System.out.println("["+ no +"번 게시글의 조회수가 "+ count+ "상승했습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+	}
+
+	//게시글 수정
+	public void updateBoard(BoardVo bvo) {
+
+		getConnection();
+
+		try {
+
+			String query = "";
+			query += " update board ";
+			query += " set    title = ? ";
+			query += " 		  ,content = ? ";
+			query += " where  no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bvo.getTitle());
+			pstmt.setString(2, bvo.getContent());
+			pstmt.setInt(3, bvo.getNo());
+
+			pstmt.executeUpdate();
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
